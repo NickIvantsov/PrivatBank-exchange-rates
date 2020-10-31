@@ -2,18 +2,13 @@ package com.example.android.privatbank_exchange_rates.app.fragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import com.example.android.privatbank_exchange_rates.app.model.ExchangeRateResponse
 import com.example.android.privatbank_exchange_rates.app.repository.IRepository
 import com.example.android.privatbank_exchange_rates.util.enums.FormatEnum
-import kotlinx.coroutines.Dispatchers
+import com.example.android.privatbank_exchange_rates.util.request.getExchangeRateLiveData
 
-class MainViewModel(repository: IRepository) : ViewModel() {
+class MainViewModel(private val repository: IRepository) : ViewModel() {
 
-    val dataLiveData: (String, FormatEnum) -> LiveData<ExchangeRateResponse?> = { date, format ->
-        liveData(Dispatchers.IO) {
-            val retrievedData = repository.getExchangeRateByDate(date, format)
-            emit(retrievedData)
-        }
-    }
+    fun getExchangeRate(date: String, format: FormatEnum): LiveData<ExchangeRateResponse?> =
+        getExchangeRateLiveData(date, format, repository)
 }

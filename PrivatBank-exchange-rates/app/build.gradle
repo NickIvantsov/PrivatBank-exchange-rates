@@ -94,8 +94,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
 
     //viewModel and liveData dependencies for the coroutine to work
+    // https://developer.android.com/topic/libraries/architecture/coroutines
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
 
     //TIMBER for logging
     implementation 'com.jakewharton.timber:timber:4.7.1'
