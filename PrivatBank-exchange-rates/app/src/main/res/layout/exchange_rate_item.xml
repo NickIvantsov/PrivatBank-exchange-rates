@@ -5,33 +5,28 @@
     android:id="@+id/card_view_categories"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="center"
     android:layout_marginStart="16dp"
     android:layout_marginTop="4dp"
     android:layout_marginEnd="16dp"
     android:layout_marginBottom="4dp"
-    app:cardCornerRadius="4dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:cardCornerRadius="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_base_currency"
+            android:id="@+id/tv_base_currency_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView7"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_base_currency"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView7"
+            app:layout_constraintTop_toTopOf="@+id/tv_base_currency"
             tools:text="UAH" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/tv_base_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -41,97 +36,97 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_currency"
+            android:id="@+id/tv_currency_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_currency"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView8"
+            app:layout_constraintTop_toTopOf="@+id/tv_currency"
             tools:text="CAD" />
 
         <TextView
-            android:id="@+id/tv_sale_rat_nb"
+            android:id="@+id/tv_sale_rat_nb_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView9"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sale_rate_nb"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="@+id/tv_sale_rate_nb"
             tools:text="13.21074" />
 
         <TextView
-            android:id="@+id/tv_purchase_rate_nb"
+            android:id="@+id/tv_purchase_rate_nb_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView10"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_purchase_rate_nb"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView10"
+            app:layout_constraintTop_toTopOf="@+id/tv_purchase_rate_nb"
             tools:text="13.21074" />
 
         <TextView
-            android:id="@+id/tv_sale_rate"
+            android:id="@+id/tv_sale_rate_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sale_rate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:layout_constraintTop_toTopOf="@+id/tv_sale_rate"
             tools:text="15" />
 
         <TextView
-            android:id="@+id/tv_purchase_rate"
+            android:id="@+id/tv_purchase_rate_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView12"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_purchase_rate"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/tv_purchase_rate"
             tools:text="13" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tv_currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Currency:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_base_currency" />
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/tv_sale_rate_nb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Sale Rate NB:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_currency" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/tv_purchase_rate_nb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Purchase Rate NB:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_sale_rate_nb" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/tv_sale_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:text="Sale Rate:"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView10" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_purchase_rate_nb" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/tv_purchase_rate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -140,7 +135,7 @@
             android:text="Purchase Rate:"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_sale_rate" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
