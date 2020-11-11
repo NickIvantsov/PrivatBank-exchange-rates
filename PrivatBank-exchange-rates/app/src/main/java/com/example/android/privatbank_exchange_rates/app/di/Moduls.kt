@@ -1,6 +1,8 @@
 package com.example.android.privatbank_exchange_rates.app.di
 
+import androidx.recyclerview.widget.ConcatAdapter
 import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesAdapter
+import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesHeaderAdapter
 import com.example.android.privatbank_exchange_rates.app.fragment.MainViewModel
 import com.example.android.privatbank_exchange_rates.app.network.PRIVATE_BANK_URL
 import com.example.android.privatbank_exchange_rates.app.network.PrivateBankApi
@@ -41,6 +43,10 @@ val appMode = module {
     factory {
         ExchangeRatesAdapter()
     }
+    factory {
+        ExchangeRatesHeaderAdapter()
+    }
+
 }
 val repositoryModule = module {
     single { RepositoryImpl(get()) }
