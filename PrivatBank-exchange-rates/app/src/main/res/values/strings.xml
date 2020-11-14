@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PrivatBank-exchange-rates</string>
+    <string name="error_internet_connection">Check your internet connection!</string>
 </resources>
