@@ -1,28 +1,29 @@
 package com.example.android.privatbank_exchange_rates.app.fragment
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.OneTimeWorkRequest
+import androidx.work.Operation
+import androidx.work.WorkManager
 import com.example.android.privatbank_exchange_rates.R
-import com.example.android.privatbank_exchange_rates.app.MyApplication
 import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesAdapter
 import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesHeaderAdapter
 import com.example.android.privatbank_exchange_rates.app.model.ExchangeRateResponse
 import com.example.android.privatbank_exchange_rates.databinding.MainFragmentBinding
+import com.example.android.privatbank_exchange_rates.util.debugTimber
+import com.example.android.privatbank_exchange_rates.util.workers.CoroutineRepeatRequestWorker
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
-import timber.log.Timber
 import kotlin.properties.Delegates
 
 class MainFragment : Fragment() {
@@ -53,9 +54,6 @@ class MainFragment : Fragment() {
             }
         }
     }
-    private val isConnectionAliveObserver = Observer<Boolean> { connectionChange ->
-        isConnectionAlive = connectionChange
-    }
     private val exchangeRateObserve = Observer<ExchangeRateResponse?> { response ->
         exchangeRatesHeaderAdapter.removeAll()
         exchangeRatesAdapter.removeAll()
@@ -72,6 +70,9 @@ class MainFragment : Fragment() {
             exchangeRatesAdapter.notifyDataSetChanged()
             exchangeRatesHeaderAdapter.notifyDataSetChanged()
         }
+    }
+    private val workManagerObserve = Observer<Operation.State> { operationState ->
+        debugTimber("operationState = $operationState")
     }
 
     private var isConnectionAlive: Boolean by Delegates.observable(false) { _, _, new ->
@@ -102,24 +103,19 @@ class MainFragment : Fragment() {
         return binding.root
     }
 
-
-
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        context?.let { thisContext ->
+            val myWorkRequest = OneTimeWorkRequest.from(CoroutineRepeatRequestWorker::class.java)
+            val workManager = WorkManager.getInstance(thisContext).enqueue(myWorkRequest)
+
+            workManager.state.observe(viewLifecycleOwner, workManagerObserve)
+        }
+
+        isConnectionAlive = true //todo в целях отладки необходим пересмотр
+
         viewLifecycleOwner.lifecycleScope.launch {
-            context?.let { thisContext ->
-                try {
-                    val application = (thisContext.applicationContext as MyApplication)
-                    application.isConnectedLiveLiveData.observe(
-                        viewLifecycleOwner,
-                        isConnectionAliveObserver
-                    )
-                } catch (ex: Throwable) {
-                    Timber.e(ex)
-                }
-            }
 
             viewModel.getExchangeRate().observe(viewLifecycleOwner, exchangeRateObserve)
 
@@ -147,13 +143,6 @@ class MainFragment : Fragment() {
             setHasFixedSize(true)
             adapter = concatAdapter
             layoutManager = LinearLayoutManager(view.context)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        checkInternetConnection(isConnectionAlive) {
-            makeLoadExchangeRateRequest()
         }
     }
 
