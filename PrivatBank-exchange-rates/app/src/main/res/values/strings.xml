@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">PrivatBank-exchange-rates</string>
     <string name="error_internet_connection">Check your internet connection!</string>
+    <string name="error_timeout_connection">Sorry we have some trouble with our server, try later!</string>
+    <string name="error_unknown">Sorry we have some trouble, try later!</string>
 </resources>

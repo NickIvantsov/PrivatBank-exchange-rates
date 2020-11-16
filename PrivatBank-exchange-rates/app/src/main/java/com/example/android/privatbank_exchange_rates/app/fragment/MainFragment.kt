@@ -20,7 +20,9 @@ import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesHe
 import com.example.android.privatbank_exchange_rates.app.model.ExchangeRateResponse
 import com.example.android.privatbank_exchange_rates.databinding.MainFragmentBinding
 import com.example.android.privatbank_exchange_rates.util.debugTimber
+import com.example.android.privatbank_exchange_rates.util.enums.InternetError
 import com.example.android.privatbank_exchange_rates.util.workers.CoroutineRepeatRequestWorker
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -59,20 +61,36 @@ class MainFragment : Fragment() {
         exchangeRatesAdapter.removeAll()
         response?.let {
             exchangeRatesHeaderAdapter.add(it)
-            binding.apply {
-                tvDateValue.text = response.date
-                tvBankValue.text = response.bank
-                tvMainCurrencyValue.text = response.baseCurrencyLit
-            }
+
             response.exchangeRate.forEach { exchangeRate ->
                 exchangeRatesAdapter.add(exchangeRate)
             }
             exchangeRatesAdapter.notifyDataSetChanged()
             exchangeRatesHeaderAdapter.notifyDataSetChanged()
         }
+        setRefreshStatus()
     }
+
+    private fun setRefreshStatus() {
+        binding.swipeContainer.isRefreshing = false
+    }
+
     private val workManagerObserve = Observer<Operation.State> { operationState ->
         debugTimber("operationState = $operationState")
+    }
+    private val exchangeRateErrorObserve = Observer<InternetError> { error ->
+        when (error) {
+            InternetError.UNKNOWN_HOST_EXCEPTION -> {
+                showRequestError(R.string.error_internet_connection)
+            }
+            InternetError.SOCKET_TIMEOUT_EXCEPTION -> {
+                showRequestError(R.string.error_timeout_connection)
+            }
+            InternetError.UNKNOWN_EXCEPTION -> {
+                showRequestError(R.string.error_unknown)
+            }
+        }
+        setRefreshStatus()
     }
 
     private var isConnectionAlive: Boolean by Delegates.observable(false) { _, _, new ->
@@ -106,6 +124,8 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        binding.swipeContainer.setOnRefreshListener(viewModel)
+
         context?.let { thisContext ->
             val myWorkRequest = OneTimeWorkRequest.from(CoroutineRepeatRequestWorker::class.java)
             val workManager = WorkManager.getInstance(thisContext).enqueue(myWorkRequest)
@@ -121,6 +141,8 @@ class MainFragment : Fragment() {
 
             exchangeRatesHeaderAdapter.getClickDateAction()
                 .observe(viewLifecycleOwner, clickDateActionObserve)
+
+            viewModel.getExchangeRateError().observe(viewLifecycleOwner, exchangeRateErrorObserve)
         }
     }
 
@@ -149,5 +171,14 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun showRequestError(msgId: Int) {
+        Snackbar.make(
+            binding.mainFragmentContainer,
+            msgId,
+            Snackbar.LENGTH_SHORT
+        )
+            .show()
     }
 }
