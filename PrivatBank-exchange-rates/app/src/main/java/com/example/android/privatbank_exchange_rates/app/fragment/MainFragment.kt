@@ -56,6 +56,7 @@ class MainFragment : Fragment() {
             }
         }
     }
+
     private val exchangeRateObserve = Observer<ExchangeRateResponse?> { response ->
         exchangeRatesHeaderAdapter.removeAll()
         exchangeRatesAdapter.removeAll()
@@ -123,7 +124,6 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         binding.swipeContainer.setOnRefreshListener(viewModel)
 
         context?.let { thisContext ->

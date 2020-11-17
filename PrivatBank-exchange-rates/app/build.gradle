@@ -128,4 +128,12 @@ dependencies {
 
     //swipe refresh layout recyclerView
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    def lifecycle_version = "2.2.0"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
+    implementation "androidx.fragment:fragment-ktx:1.2.5"
 }

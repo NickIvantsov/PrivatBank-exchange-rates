@@ -1,6 +1,5 @@
 package com.example.android.privatbank_exchange_rates.app.di
 
-import androidx.recyclerview.widget.ConcatAdapter
 import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesAdapter
 import com.example.android.privatbank_exchange_rates.app.adapter.ExchangeRatesHeaderAdapter
 import com.example.android.privatbank_exchange_rates.app.fragment.MainViewModel
